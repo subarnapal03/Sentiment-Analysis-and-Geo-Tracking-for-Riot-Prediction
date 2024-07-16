@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #292b2c;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #fff;
+            margin-top: 30px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        textarea {
+            width: 70%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+            color: #000; /* Text color in the textarea */
+            background-color: #fff; /* Textarea background color */
+        }
+
+        button {
+            background-color: #5bc0de;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #31b0d5;
+        }
+
+        .alert {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #d9534f;
+            color: #fff;
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #fff;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sentiment Analysis</h1>
+    
+    <form action="/predict" method="post">
+        <label for="text">Enter your text:</label>
+        <textarea id="text" name="text" rows="4" cols="50" required></textarea>
+        <br>
+        <button type="submit">Predict Sentiment</button>
+    </form>
+
+    {% if alert_message %}
+        <div class="alert">
+            <strong>{{ alert_message }}</strong>
+        </div>
+    {% endif %}
+
+    {% if text %}
+        <h2>Input Text:</h2>
+        <p>{{ text }}</p>
+
+        <h2>Sentiment Probabilities:</h2>
+        <ul>
+            {% for label, probability in probabilities.items() %}
+                <li>{{ label }}: {{ probability|round(4) }}</li>
+            {% endfor %}
+        </ul>
+
+        {% if ip_info %}
+            <h2>IP Information:</h2>
+            <ul>
+                <li>IP Address: {{ ip_info.ip }}</li>
+               
+            </ul>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
